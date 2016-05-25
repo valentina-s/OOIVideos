@@ -12,7 +12,7 @@ import imageio
 def calculateRollingStats(filename, lag=1, subsampleRate=1):
 
     # creating the video object
-    vid = imageio.get_reader(os.path.join(video_path,filename), 'ffmpeg')
+    vid = imageio.get_reader(filename, 'ffmpeg')
 
     # extracting the video dimensions
     nofFrames = len(vid)
@@ -76,9 +76,45 @@ def createRollingStatsVideo(rolling_mean, rolling_var, videoname, subsampleRate,
     vid.close()
 
 
+def main():
+    """
+        This script reads a video and calculates rolling statistics and outputs
+        them to a .csv file.
 
-video_path = os.path.join(os.getcwd(),'..','OOIVideos')
-# just reading sparse frames:
-filename = 'opendap_hyrax_large_format_RS03ASHS-PN03B-06-CAMHDA301_2016_01_02_CAMHDA301-20160102T210000Z.mp4'
-rolling_mean1, rolling_var1 = calculateRollingStats(os.path.join(video_path,filename),lag = 3,subsampleRate = 10)
-# createRollingStatsVideo(rolling_mean,rolling_var,os.path.join(results_path,videoname), subsampleRate=10, speedup=10)
+    """
+    import pandas as pd
+    import sys
+    import time
+
+    start_time = time.time()
+
+    if len(sys.argv)>1:
+        filename_in = sys.argv[1]
+    else:
+        filename_in = 'opendap_hyrax_large_format_RS03ASHS-PN03B-06-CAMHDA301_2016_01_02_CAMHDA301-20160102T210000Z.mp4'
+
+    if len(sys.argv)<2:
+        filename_out = 'RollingVariance_' + filename_in[-20:-4] + '.csv'
+    else:
+        filename_out = argv[2]
+
+    video_path = os.path.join(os.getcwd(),'OOIVideos')
+    results_path = os.path.join(os.getcwd(),'results')
+
+    date_stamp = filename_in[-16:-4]
+
+
+    # reading sparse frames:
+    rolling_mean, rolling_var = calculateRollingStats(os.path.join(video_path,filename_in),lag = 3,subsampleRate = 10)
+
+    # uncomment to create a video
+    # createRollingStatsVideo(rolling_mean,rolling_var,os.path.join(results_path,videoname), subsampleRate=10, speedup=10)
+
+    # write variance to a .csv
+    pd.DataFrame(rolling_var).to_csv(os.path.join(results_path,filename_out), index = None, header = None)
+
+    elapsed_time = time.time() - start_time
+    print('Elapsed time: '+ str(elapsed_time)+'s')
+
+if __name__ == '__main__':
+    main()
