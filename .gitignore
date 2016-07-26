@@ -2,4 +2,8 @@ notebooks/.ipynb_checkpoints
 .ipynb_checkpoints
 *.pyc
 *.py~
+*.md~
+*~
+*nohup.out
+
 

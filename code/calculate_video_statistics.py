@@ -48,6 +48,50 @@ def calculateRollingStats(filename, lag=1, subsampleRate=1):
 
     return(rolling_mean, rolling_var)
 
+def calculateRollingStats(filename, lag=1, subsampleRate=1):
+
+    # creating the video object
+    vid = imageio.get_reader(filename, 'ffmpeg')
+
+    # extracting the video dimensions
+    nofFrames = len(vid)
+    dim1 = vid.get_data(0).shape[0]
+    dim2 = vid.get_data(0).shape[1]
+
+    # generate the list of frame numbers we will process
+    nums = list(np.arange(0,nofFrames,subsampleRate))
+
+    # initializing return variables
+    rolling_mean = []
+    rolling_var = []
+
+    rolling_mean = np.zeros((len(nums[i],)))
+    rolling_variance = np.zeros((len(nums[i],)))
+
+
+    # process first block
+    block = []
+    for i in np.arange(lag):
+        block.append(vid.get_data(nums[i])[:,:,0])
+    block_array = np.array(block)
+
+    rolling_mean[0] = np.sum(np.mean(block_array,0)))
+    rolling_var[0] = np.sum(np.var(block_array,0)))
+
+
+    for i in np.arange(lag,len(nums)):
+        print(nums[i])
+        block.append(vid.get_data(nums[i])[:,:,0])
+        block.pop(0)
+        block_array = np.array(block)
+
+        rolling_mean.append(np.sum(np.mean(block_array,0)))
+        rolling_var.append(np.sum(np.var(block_array,0)))
+
+    vid.close()
+
+    return(rolling_mean, rolling_var)
+
 def createRollingStatsVideo(rolling_mean, rolling_var, videoname, subsampleRate, speedup):
 
     fig = plt.figure(figsize = (15,5))
