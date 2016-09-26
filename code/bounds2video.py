@@ -4,6 +4,11 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 
+# trying xvfbwrapper to run headless
+import xvfbwraper as xvfb
+
+
+
 
 def bounds2video(bounds_file,video_in, video_out, subsampleRate, speedup):
     """
@@ -63,7 +68,14 @@ def main():
     import imageio
     import pandas as pd
     import matplotlib.pyplot as plt
+
+    vdisplay = Xvfb()
+    vdisplay.start()
+
     bounds2video(sys.argv[1],sys.argv[2],sys.argv[3],10,10)
+
+    vdisplay.stop()
+
 
 if __name__ == '__main__':
     main()
