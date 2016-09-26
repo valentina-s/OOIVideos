@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # trying xvfbwrapper to run headless
-import xvfbwraper as xvfb
+import xvfbwrapper as xvfb
 
 
 
