@@ -70,8 +70,11 @@ def main():
     import matplotlib.pyplot as plt
     from xvfbwrapper import Xvfb
 
-    with Xvfb() as xvfb:
-        bounds2video(sys.argv[1],sys.argv[2],sys.argv[3],10,10)
+    ioff()
+
+    #with Xvfb() as xvfb:
+    #    ioff()
+    bounds2video(sys.argv[1],sys.argv[2],sys.argv[3],10,10)
 
 
 if __name__ == '__main__':
