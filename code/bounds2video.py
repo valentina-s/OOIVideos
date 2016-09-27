@@ -70,7 +70,7 @@ def main():
     import matplotlib.pyplot as plt
     from xvfbwrapper import Xvfb
 
-    ioff()
+    plt.ioff()
 
     #with Xvfb() as xvfb:
     #    ioff()
