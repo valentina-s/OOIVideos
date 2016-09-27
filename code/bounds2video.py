@@ -72,9 +72,14 @@ def main():
 
     plt.ioff()
 
-    with Xvfb() as xvfb:
-        plt.ioff()
-        bounds2video(sys.argv[1],sys.argv[2],sys.argv[3],10,10)
+    # with Xvfb() as xvfb:
+    # plt.ioff()
+    vdisplay = Xvfb()
+    vdisplay.start()
+    bounds2video(sys.argv[1],sys.argv[2],sys.argv[3],10,10)
+    vdisplay.stop()
+    import os
+    os.system('(sleep 5 && kill -9 %d) &' % vdisplay.proc.pid)
 
 
 if __name__ == '__main__':
