@@ -86,12 +86,12 @@ def main():
     if len(sys.argv)<5:
         subsampleRate = 10
     else:
-        subsampleRate = float(sys.argv[4])
+        subsampleRate = int(sys.argv[4])
 
     if len(sys.argv)<6:
         speedup = 10
     else:
-        speedup = float(sys.argv[5])
+        speedup = int(sys.argv[5])
 
     bounds2video(sys.argv[1],sys.argv[2],sys.argv[3],subsampleRate,speedup)
     vdisplay.stop()
