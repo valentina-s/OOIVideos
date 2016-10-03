@@ -1,6 +1,8 @@
 from __future__ import division
 import imageio
 import pandas as pd
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 
