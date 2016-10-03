@@ -59,7 +59,7 @@ def bounds2video(bounds_file,video_in, video_out, subsampleRate, speedup):
 
         # convert the plot
         fig.canvas.draw()
-        fig_data = np.fromstring(fig.canvas.tostring_rgb(), sep='')
+        fig_data = np.fromstring(fig.canvas.tostring_rgb(dtype = 'uint8'), sep='')
         fig_data = fig_data.reshape(fig.canvas.get_width_height()[::-1] + (3,))
 
         # vid_out.append_data(fig_data.astype(np.dtype('uint8')))
