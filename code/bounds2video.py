@@ -32,7 +32,7 @@ def bounds2video(bounds_file,video_in, video_out, subsampleRate, speedup):
 
 
     for lb,ub in zip(bounds['LB'],bounds['UB']):
-        binary[lb:ub] = 1
+        binary[round(lb/subsampleRate*10):round(ub/subsampleRate*10)] = 1
 
 
 
@@ -78,7 +78,18 @@ def main():
     # plt.ioff()
     vdisplay = Xvfb()
     vdisplay.start()
-    bounds2video(sys.argv[1],sys.argv[2],sys.argv[3],10,10)
+
+    if len(sys.argv)<5:
+        subsampleRate = 10
+    else:
+        subsampleRate = sys.argv[4]
+
+    if len(sys.argv<6):
+        speedup = 10
+    else:
+        speedup = sys.argv[5]
+
+    bounds2video(sys.argv[1],sys.argv[2],sys.argv[3],subsampleRate,speedup)
     vdisplay.stop()
     import os
     # os.system('(sleep 5 && kill -9 %d) &' % vdisplay.proc.pid)
