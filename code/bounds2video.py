@@ -53,12 +53,12 @@ def bounds2video(bounds_file,video_in, video_out, subsampleRate, speedup):
 
 
         # convert the plot
-        fig.canvas.draw()
-        fig_data = np.fromstring(fig.canvas.tostring_rgb(), dtype=np.uint8, sep='')
-        fig_data = fig_data.reshape(fig.canvas.get_width_height()[::-1] + (3,))
+        # fig.canvas.draw()
+        # fig_data = np.fromstring(fig.canvas.tostring_rgb(), dtype=np.uint8, sep='')
+        # fig_data = fig_data.reshape(fig.canvas.get_width_height()[::-1] + (3,))
 
-        vid_out.append_data(fig_data.astype(np.dtype('uint8')))
-        # vid_out.append_data(im)
+        # vid_out.append_data(fig_data.astype(np.dtype('uint8')))
+        vid_out.append_data(im)
 
     vid_in.close()
     vid_out.close()
@@ -79,7 +79,7 @@ def main():
     bounds2video(sys.argv[1],sys.argv[2],sys.argv[3],10,10)
     vdisplay.stop()
     import os
-    os.system('(sleep 5 && kill -9 %d) &' % vdisplay.proc.pid)
+    # os.system('(sleep 5 && kill -9 %d) &' % vdisplay.proc.pid)
 
 
 if __name__ == '__main__':
