@@ -65,6 +65,7 @@ def bounds2video(bounds_file,video_in, video_out, subsampleRate, speedup):
         # vid_out.append_data(fig_data.astype(np.dtype('uint8')))
         vid_out.append_data(fig_data)
         # vid_out.append_data(im)
+        clf()
 
     vid_in.close()
     vid_out.close()
