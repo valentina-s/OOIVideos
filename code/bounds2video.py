@@ -30,6 +30,7 @@ def bounds2video(bounds_file,video_in, video_out, subsampleRate, speedup):
     frame_idx = np.arange(0,len(vid_in),subsampleRate)
     binary = np.zeros((len(frame_idx),))
 
+    print(subsampleRate)
 
     for lb,ub in zip(bounds['LB'],bounds['UB']):
         binary[round(lb/subsampleRate*10):round(ub/subsampleRate*10)] = 1
@@ -61,7 +62,7 @@ def bounds2video(bounds_file,video_in, video_out, subsampleRate, speedup):
         fig_data = np.fromstring(fig.canvas.tostring_rgb(), sep='')
         fig_data = fig_data.reshape(fig.canvas.get_width_height()[::-1] + (3,))
 
-        vid_out.append_data(fig_data.astype(np.dtype('uint8')))
+        # vid_out.append_data(fig_data.astype(np.dtype('uint8')))
         vid_out.append_data(fig_data)
         # vid_out.append_data(im)
 
@@ -94,8 +95,7 @@ def main():
 
     bounds2video(sys.argv[1],sys.argv[2],sys.argv[3],subsampleRate,speedup)
     vdisplay.stop()
-    import os
-    # os.system('(sleep 5 && kill -9 %d) &' % vdisplay.proc.pid)
+
 
 
 if __name__ == '__main__':
