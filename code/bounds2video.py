@@ -45,21 +45,24 @@ def bounds2video(bounds_file,video_in, video_out, subsampleRate, speedup):
 
         im = vid_in.get_data(frame_idx[i])
         plt.subplot(211)
-        plt.imshow(im*binary[i], aspect = 'equal')
+        plt.imshow(im, aspect = 'equal')
         plt.axis('off')
+        plt.title('Raw Video')
 
 
         plt.subplot(212)
         plt.imshow(im*(1-binary[i]), aspect = 'equal')
         plt.axis('off')
+        plt.title('Static Scenes')
 
 
         # convert the plot
         fig.canvas.draw()
-        fig_data = np.fromstring(fig.canvas.tostring_rgb(), dtype=np.uint8, sep='')
+        fig_data = np.fromstring(fig.canvas.tostring_rgb(), sep='')
         fig_data = fig_data.reshape(fig.canvas.get_width_height()[::-1] + (3,))
 
         vid_out.append_data(fig_data.astype(np.dtype('uint8')))
+        vid_out.append_data(fig_data)
         # vid_out.append_data(im)
 
     vid_in.close()
@@ -84,7 +87,7 @@ def main():
     else:
         subsampleRate = sys.argv[4]
 
-    if len(sys.argv<6):
+    if len(sys.argv)<6:
         speedup = 10
     else:
         speedup = sys.argv[5]
