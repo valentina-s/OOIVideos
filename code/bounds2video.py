@@ -38,7 +38,7 @@ def bounds2video(bounds_file,video_in, video_out, subsampleRate, speedup):
 
 
     #for i in range(len(frame_idx)):
-    for i in range(20):
+    for i in range(60):
 
         print(i)
 
