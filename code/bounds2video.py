@@ -49,8 +49,6 @@ def bounds2video(bounds_file,video_in, video_out, subsampleRate, speedup):
         plt.imshow(im, aspect = 'equal')
         plt.axis('off')
         plt.title('Raw Video')
-        print(type(im))
-        print(type(im*binary[i]))
 
 
         plt.subplot(212)
