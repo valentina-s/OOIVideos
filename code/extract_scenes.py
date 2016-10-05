@@ -23,13 +23,22 @@ def extractSceneBounds(measure, thresh = '2median'):
     """
     if thresh == '2median':
         thresh = 2*np.median(measure)
+    # the assumption is that the first scene is static and binary=1
 
-    binary = np.array(np.array(measure)<thresh).astype('int')
+    binary = np.array(np.array(measure).ravel()<thresh).astype('int')
     diff = binary[1:] - binary[:-1]
-    upper_bound = np.where(diff == 1)[0]
-    lower_bound = np.where(diff == -1)[0]
+    lower_bound = list(np.where(diff == 1)[0])
+    lower_bound.insert(0,0)
+    upper_bound = list(np.where(diff == -1)[0])
 
-    return(zip(list(lower_bound),list(upper_bound)))
+
+
+    if binary[-1] == 1:
+        upper_bound.append(len(binary)-1)
+
+
+    # wrapping the final result as a list as zip in Python 3 is not an iterator
+    return(list(zip(lower_bound,upper_bound)))
 
 def main():
     """
@@ -67,6 +76,7 @@ def main():
 
     # extract scenes
     bounds = extractSceneBounds(measure)
+
 
 
     # write output in two column csv
