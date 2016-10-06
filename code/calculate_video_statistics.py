@@ -65,8 +65,8 @@ def calculateRollingStats(filename, lag=1, subsampleRate=1):
     rolling_mean = []
     rolling_var = []
 
-    rolling_mean = np.zeros((len(nums[i],)))
-    rolling_variance = np.zeros((len(nums[i],)))
+    rolling_mean = np.zeros((len(nums,)))
+    rolling_variance = np.zeros((len(nums,)))
 
 
     # process first block
