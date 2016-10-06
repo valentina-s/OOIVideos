@@ -27,12 +27,14 @@ def extractSceneBounds(measure, thresh = '2median'):
 
     binary = np.array(np.array(measure).ravel()<thresh).astype('int')
     diff = binary[1:] - binary[:-1]
-    lower_bound = list(np.where(diff == 1)[0])
-    lower_bound.insert(0,0)
-    upper_bound = list(np.where(diff == -1)[0])
+    # I am adding one since the first one will always be zero
+    lower_bound = list(np.where(diff == 1)[0]+1)
 
+    if binary[0]==1:
+        lower_bound.insert(0,0)
 
-
+    # I am adding one since the first one will always be zero.
+    upper_bound = list(np.where(diff == -1)[0]+1)
     if binary[-1] == 1:
         upper_bound.append(len(binary)-1)
 
