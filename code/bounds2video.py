@@ -52,7 +52,7 @@ def bounds2video(bounds_file,video_in, video_out, subsampleRate, speedup):
 
 
         plt.subplot(212)
-        plt.imshow(im*int(1-binary[i]), aspect = 'equal')
+        plt.imshow(im*int(binary[i]), aspect = 'equal')
         plt.axis('off')
         plt.title('Static Scenes')
 
