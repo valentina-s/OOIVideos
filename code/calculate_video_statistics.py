@@ -48,7 +48,7 @@ def calculateRollingStats(filename, lag=1, subsampleRate=1):
 
     return(rolling_mean, rolling_var)
 
-def calculateRollingStats(filename, lag=1, subsampleRate=1):
+def calculateRollingStats_list(filename, lag=1, subsampleRate=1):
 
     # creating the video object
     vid = imageio.get_reader(filename, 'ffmpeg')
