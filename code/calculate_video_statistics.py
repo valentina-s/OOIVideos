@@ -75,8 +75,8 @@ def calculateRollingStats_list(filename, lag=1, subsampleRate=1):
         block.append(vid.get_data(nums[i])[:,:,0])
     block_array = np.array(block)
 
-    rolling_mean[0] = np.sum(np.mean(block_array,0)))
-    rolling_var[0] = np.sum(np.var(block_array,0)))
+    rolling_mean[0] = np.sum(np.mean(block_array,0))
+    rolling_var[0] = np.sum(np.var(block_array,0))
 
 
     for i in np.arange(lag,len(nums)):
