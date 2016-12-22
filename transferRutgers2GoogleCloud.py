@@ -1,11 +1,21 @@
 from bs4 import BeautifulSoup
-from urllib.request import urlopen
-from urllib.error import HTTPError, URLError
-from urllib.parse import urlparse, urljoin
+import sys
+if sys.version_info >= (3,0):
+  from urllib.request import urlopen
+else:
+  from urllib2 import urlopen
+if sys.version_info >= (3,0):
+  from urllib.error import HTTPError, URLError  
+  from urllib.parse import urlparse, urljoin
+else :
+  from urllib2 import HTTPError, URLError
+  from urlparse import urlparse, urljoin
 import os.path, errno
 import shutil
 import subprocess as subprocess
-from concurrent.futures import *
+if sys.version_info >= (3,0):
+  from concurrent.futures import *
+
 from itertools import islice
 import ssl
 
@@ -159,7 +169,7 @@ def  download_month(month,year=2016):
                       until=datetime.strptime(date_end, '%Y%m%d'))][:-1]
 
     # looping through each day of the month
-    for date in dates[7:]:
+    for date in dates:
         url = "https://rawdata.oceanobservatories.org/files/RS03ASHS/PN03B/06-CAMHDA301/"+date
         i = 1
         for url in moviecrawl_html(url):
@@ -167,13 +177,14 @@ def  download_month(month,year=2016):
             # download to local file
 
 
-            local_file_name = getlocalpath(url,'/media/7AA2E24AA2E20A89/fetched_ooivideos')
+            local_file_name = getlocalpath(url,'../temp_storage/fetched_ooivideos')
 
             #local_file_name = '/media/7AA2E24AA2E20A89/ooifetched_videos'+local_file_name
             # if not os.path.exists(local_file_name):
             #if i==1 or not os.path.exists(local_file_name):
-            if i==1:
-                download(url, local_file_name)
+            
+            #if i==1:# if I want to download only one file
+            download(url, local_file_name)
             print(local_file_name)
             i = i+1
             # uploading to google drive
@@ -184,12 +195,12 @@ def  download_month(month,year=2016):
             # command = "gsutil cp -r test_dir gs://ooivideos-test-bucket/temp_dir"
             # subprocess.Popen(command, shell=True, stderr=subprocess.PIPE)
 
-        command = "gsutil -m cp -r /media/7AA2E24AA2E20A89/fetched_ooivideos/*  gs://ooivideos-test-bucket/temp_dir/"
+        command = "gsutil -m cp -r ../temp_storage/fetched_ooivideos/*  gs://ooivideos-test-bucket/temp_dir/"
         # command = "gsutil cp -r test_dir gs://ooivideos-test-bucket/temp_dir"
         p = subprocess.Popen(command, shell=True, stderr=subprocess.PIPE)
         _, p_stderr = p.communicate()
         # removing from local disk
-        subprocess.Popen('rm -r /media/7AA2E24AA2E20A89/fetched_ooivideos/*',shell=True, stderr=subprocess.PIPE,stdout=subprocess.PIPE)
+        subprocess.Popen('rm -r ../temp_storage/fetched_ooivideos/*',shell=True, stderr=subprocess.PIPE,stdout=subprocess.PIPE)
 
 
 
