@@ -5,7 +5,7 @@ if sys.version_info >= (3,0):
 else:
   from urllib2 import urlopen
 if sys.version_info >= (3,0):
-  from urllib.error import HTTPError, URLError  
+  from urllib.error import HTTPError, URLError
   from urllib.parse import urlparse, urljoin
 else :
   from urllib2 import HTTPError, URLError
@@ -155,7 +155,7 @@ def test():
       download(url, local_file_name)
 #    uploadtoGoogle(local_file_name)
   #print googleexists("opendap_hyrax_large_format_RS03ASHS-PN03B-06-CAMHDA301_2016_01_01_CAMHDA301-20160101T000000Z.mp4")
-def  download_month(month,year=2016):
+def  download_month(month,year):
     url = "https://rawdata.oceanobservatories.org/files/RS03ASHS/PN03B/06-CAMHDA301/"+str(year)+'{:02d}'.format(month)
     from dateutil import rrule
     from datetime import datetime
@@ -182,7 +182,7 @@ def  download_month(month,year=2016):
             #local_file_name = '/media/7AA2E24AA2E20A89/ooifetched_videos'+local_file_name
             # if not os.path.exists(local_file_name):
             #if i==1 or not os.path.exists(local_file_name):
-            
+
             #if i==1:# if I want to download only one file
             download(url, local_file_name)
             print(local_file_name)
@@ -212,8 +212,38 @@ def  download_month(month,year=2016):
 
 
 if __name__ == '__main__':
+  import argparse
+  from datetime import datetime, timedelta
+  from collections import OrderedDict
+
   url = "http://opendap-devel.ooi.rutgers.edu:8080/opendap/hyrax/large_format/RS03ASHS-PN03B-06-CAMHDA301/2016/catalog.xml"
-  #test()
-  download_month(5)
+
+  parser = argparse.ArgumentParser(description="Format is mm/yy")
+  parser.add_argument('-start_month','--start_month',type=str,required=False)
+  parser.add_argument('-end_month','--end_month',type=str,required=False)
+  parser.add_argument('-month','--month',type=str,required=False)
+  args = parser.parse_args()
+
+
+  # transfer files by months
+  if args.month:
+      m = datetime.strptime(args.month, "%m/%Y").strftime(r"%m-%Y")
+      print('Downloading month ', m)
+      download_month(int(m[:2]),int(m[2:]))
+
+  elif args.start_month is not None and args.end_month is not None:
+      #start_month = int(args.start_month[:2])
+      #end_month = int(args.end_month[:2])
+      dates = [args.start_month,args.end_month]
+      start, end = [datetime.strptime(_, "%m/%Y") for _ in dates]
+      listOfMonths = OrderedDict(((start + timedelta(_)).strftime(r"%m-%Y"), None) for _ in range((end - start).days)).keys()
+      for m in listOfMonths:
+          print('Downloading month ', m)
+          download_month(int(m[:2]), int(m[2:]))
+  else:
+      print('You should supply either a --month argument or --start_date and --end_date arguments.')
+
+
+
   #for googlefile in transload(url):
   #  pass
