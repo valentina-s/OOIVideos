@@ -8,6 +8,10 @@ from skimage import io
 import dask.array as da
 from dask import delayed
 
+import numpy as np
+
+import time
+
 def testWithDask(list_urls):
 
     res = urllib.request.Request(list_urls[0])
@@ -30,8 +34,9 @@ def testWithMap(list_urls):
     import concurrent.futures
     import urllib.request
 
-    executor = concurrent.futures.ProcessPoolExecutor(max_workers=1)
-    stack = executor.map(io.imread,list_urls)
+    e = concurrent.futures.ProcessPoolExecutor(max_workers=1)
+    stack = e.map(io.imread,list_urls)
+    print(np.array(list(stack)).shape)
     return(stack)
 
 
@@ -41,5 +46,7 @@ if __name__ == "__main__":
 
     # create a list of paths to call
     base_url = 'http://'+IPAddress+'/org/oceanobservatories/rawdata/files/RS03ASHS/PN03B/06-CAMHDA301/2016/09/01/CAMHDA301-20160901T000000Z.mov/frame/'
-    list_urls = [base_url+str(frame) for frame in range(1000,1001)]
+    list_urls = [base_url+str(frame) for frame in range(1,25000,100)]
+    t = time.time()
     res = testWithMap(list_urls)
+    print(time.time() - t)
