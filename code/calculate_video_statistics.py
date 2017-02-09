@@ -94,6 +94,26 @@ def calculateRollingStats_list(filename, lag=1, subsampleRate=1):
 
 def createRollingStatsVideo(rolling_mean, rolling_var, videoname, subsampleRate, speedup):
 
+
+    """
+        calculateRollingStats(filename, lag=1,subsampleRate=1)
+
+        Inputs:
+        ------
+
+        filename:      name of file
+        lag:           the lag of the rolling mean (after subsampling)
+        subsampleRate: the video is read at rate subsampleRate, and the statistics are calculated on the sparser sequence.
+
+        Outputs:
+        -------
+        (rolling_mean, rolling_variance): tuple of lists
+
+
+    """
+
+
+
     fig = plt.figure(figsize = (15,5))
     vid = imageio.get_writer(videoname,fps = 30/subsampleRate*speedup)
 
