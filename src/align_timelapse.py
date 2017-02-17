@@ -58,6 +58,8 @@ def saveTimelapse(video_timelapse,filename):
     """
     import imageio
 
+    imageio.plugins.ffmpeg.download()
+
     writer = imageio.get_writer(filename, fps=1)
 
     print(len(video_timelapse))

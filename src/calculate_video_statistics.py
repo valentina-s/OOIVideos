@@ -191,7 +191,7 @@ def createRollingStatsVideo(rolling_mean, rolling_var, videoname, subsampleRate,
     """
 
 
-
+    imageio.plugins.ffmpeg.download()
     fig = plt.figure(figsize = (15,5))
     vid = imageio.get_writer(videoname,fps = 30/subsampleRate*speedup)
 
