@@ -108,7 +108,16 @@ def calculateRollingStats_fromUrl(movie_url, lag=3, subsampleRate=10, frame_star
 
     from skimage import io
     import json
-    from urllib.request import urlopen
+
+    import sys
+
+
+    if sys.version_info >= (3,0):
+      from urllib.request import urlopen
+      from urllib.error import HTTPError, URLError
+    else:
+      from urllib2 import urlopen
+      from urllib2 import HTTPError, URLError
 
 
     try:
