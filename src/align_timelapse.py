@@ -2,7 +2,7 @@ import numpy as np
 from generate_urls import generate_urls
 from calculate_video_statistics import calculateRollingStats_fromUrl
 
-
+import sys
 
 
 if sys.version_info >= (3,0):
