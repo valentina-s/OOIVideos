@@ -3,8 +3,17 @@ from generate_urls import generate_urls
 from calculate_video_statistics import calculateRollingStats_fromUrl
 
 
-from urllib.request import urlopen
-from urllib.error import URLError
+
+
+if sys.version_info >= (3,0):
+  from urllib.request import urlopen
+  from urllib.error import HTTPError, URLError
+else:
+  from urllib2 import urlopen
+  from urllib2 import HTTPError, URLError
+
+
+
 
 def ping(url):
     try:
