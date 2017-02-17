@@ -47,7 +47,6 @@ def readTimelapse(urls):
         try:
             video_timelapse.append(io.imread(url))
         except:
-            print('passing')
             pass
     return(video_timelapse)
 
@@ -62,9 +61,7 @@ def saveTimelapse(video_timelapse,filename):
 
     writer = imageio.get_writer(filename, fps=1)
 
-    print(len(video_timelapse))
     for im in video_timelapse:
-        print('frame')
         writer.append_data(im)
     writer.close()
 
