@@ -139,7 +139,7 @@ if __name__ == '__main__':
   ## cashing curves
   import pickle
   with open('temp.pickle','wb') as temp:
-      temp.pickle.dump(res_np)
+      pickle.dump(res_np,temp)
 
   # extract offsets of misalignment
   offsets = []
