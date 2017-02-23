@@ -117,7 +117,6 @@ if __name__ == '__main__':
 
       if args.poolType=='thread':
           e = ThreadPoolExecutor(args.poolSize)
-          print()
           res = e.map(functools.partial(calculateRollingStats_fromUrl,\
           subsampleRate = subsampleRate,frame_start=3000,frame_end=7000),filtered_urls)
           e.shutdown(wait=False)
@@ -154,8 +153,8 @@ if __name__ == '__main__':
   print(offsets)
 
   # aligning the urls
-  aligned_urls = [url+'/frame/'+str(args.frame-offset*args.subsampleRate) for url,offset in zip(filtered_urls,offsets) if offset is not None]
-  print(aligned_urls)
+  aligned_urls = [url+'/frame/'+str(args.frame-offset*subsampleRate) for url,offset in zip(filtered_urls,offsets) if offset is not None]
+
 
   # extracting frames for the timelapse
   video_timelapse = readTimelapse(aligned_urls)

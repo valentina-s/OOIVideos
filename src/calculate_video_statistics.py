@@ -122,14 +122,16 @@ def calculateRollingStats_fromUrl(movie_url, lag=3, subsampleRate=10, frame_star
 
     try:
         response = urlopen(movie_url)
+        # extracting the video dimensions
+        header = json.loads(response.read().decode())
+        nofFrames = header['NumFrames']
     except:
         return(None)
-    # extracting the video dimensions
-    header = json.loads(response.read().decode())
-    nofFrames = header['NumFrames']
+
 
     if frame_end == -1:
         frame_end = nofFrames
+        print(frame_end)
 
     # generate the list of frame numbers we will process
     nums = list(np.arange(frame_start,frame_end,subsampleRate))
