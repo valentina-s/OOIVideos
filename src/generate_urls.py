@@ -10,6 +10,7 @@ def generate_urls(start_date,end_date,sampling, interval=1):
 
     IPAddress = 'https://lazycache-dot-ferrous-ranger-158304.appspot.com/v1/org/oceanobservatories/rawdata/'
     # IPAddress = 'https://rawdata.oceanobservatories.org/'
+    IPAddress = 'https://camhd-app-dev.appspot.com/v1/org/oceanobservatories/rawdata/'
     base_url = IPAddress+'files/RS03ASHS/PN03B/06-CAMHDA301/'
 
     urls = []
