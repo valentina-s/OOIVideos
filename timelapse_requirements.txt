@@ -4,3 +4,4 @@ matplotlib
 seaborn
 imageio
 scikit-image
+futures
