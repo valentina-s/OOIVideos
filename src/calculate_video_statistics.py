@@ -92,17 +92,26 @@ def calculateRollingStats_list(filename, lag=1, subsampleRate=1):
 
     return(rolling_mean, rolling_var)
 
-def calculateRollingStats_fromUrl(movie_url, lag=3, subsampleRate=10, frame_start=0, frame_end=-1):
+def calculateRollingStats_fromUrl(movie_url, lag=3, subsampleRate=10, frame_window=-1):
 
     """
         calculateRollingStats_fromUrl calculates rolling variance from a video at an url.
 
+        The rolling variance is calculated for each pixel. Then the average for each time point is returned.
+
         Inputs:
-            movie_url
-            lag
-            subsampleRate
-            frame_start
-            frame_end
+        -------
+
+        movie_url:      the web address of the movie
+        lag:            the lag of the rolling mean (after subsampling)
+        subsampleRate:  the video is read at rate subsampleRate, and the statistics are calculated on the sparser sequence.
+        frame_window:   to align we take frames in the window (frame - frame_window,frame + frame_window)
+
+        Outputs:
+        --------
+        rolling_var:    a sequence of averaged (in space) rolling variances evaluated at each pixel over time.
+
+
 
     """
 
@@ -129,11 +138,14 @@ def calculateRollingStats_fromUrl(movie_url, lag=3, subsampleRate=10, frame_star
         return(None)
 
 
-    if frame_end == -1:
+    if frame_window == -1:
+        frame_start = 0
         frame_end = nofFrames
-        print(frame_end)
+
 
     # generate the list of frame numbers we will process
+    frame_start = max(frame - frame_window,0)
+    frame_end = min(frame + frame_window,nofFrames)
     nums = list(np.arange(frame_start,frame_end,subsampleRate))
 
     list_urls = [movie_url+'/frame/'+str(num) for num in nums]

@@ -118,18 +118,18 @@ if __name__ == '__main__':
       if args.poolType=='thread':
           e = ThreadPoolExecutor(args.poolSize)
           res = e.map(functools.partial(calculateRollingStats_fromUrl,\
-          subsampleRate = subsampleRate,frame_start=3000,frame_end=7000),filtered_urls)
+          subsampleRate = subsampleRate,frame_window=2000),filtered_urls)
           e.shutdown(wait=False)
 
       elif args.poolType=='process':
           e = ProcessPoolExecutor(args.poolSize)
           res = e.map(functools.partial(calculateRollingStats_fromUrl,\
-          subsampleRate = subsampleRate,frame_start=3000,frame_end=7000),filtered_urls)
+          subsampleRate = subsampleRate,frame_window=2000,filtered_urls)
           e.shutdown(wait=False)
 
   else:
       res = map(functools.partial(calculateRollingStats_fromUrl,\
-      subsampleRate = subsampleRate,frame_start=3000,frame_end=7000),filtered_urls)
+      subsampleRate = subsampleRate,frame_window=2000),filtered_urls)
 
   res = list(res)
 
